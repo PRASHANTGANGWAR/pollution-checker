@@ -86,8 +86,20 @@ The filtering system achieves high accuracy by combining multiple validation str
 
 ## Rate Limiting & Caching
 
+- **Cities API**: Limited to 10 requests per minute per IP address
+- **General API**: Limited to 100 requests per minute per IP address
 - **Wikipedia API**: Results are cached in memory for 1 hour to reduce API calls
 - **Error Handling**: Graceful degradation when external APIs are unavailable
+
+### Rate Limit Response
+When rate limits are exceeded, the API returns:
+```json
+{
+  "error": "Too many requests",
+  "code": "RATE_LIMIT_EXCEEDED",
+  "message": "Rate limit exceeded. Please try again in 1 minute."
+}
+```
 
 ## Environment Variables
 

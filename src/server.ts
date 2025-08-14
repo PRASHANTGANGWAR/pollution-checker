@@ -10,6 +10,7 @@ import citiesRouter from "./routes/citiesRoutes";
 import healthRouter from "./routes/healthRoutes";
 import errorHandler from "./middleware/errorHandler";
 import { requestTracker, validateRequest } from "./middleware/requestTracker";
+import { generalRateLimiter } from "./middleware/rateLimiter";
 
 const app = express();
 const PORT = config.server.port || 3000;
@@ -18,6 +19,9 @@ const PORT = config.server.port || 3000;
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+
+// Rate limiting - apply to all routes
+app.use(generalRateLimiter);
 
 // Custom middleware
 app.use(requestTracker);
